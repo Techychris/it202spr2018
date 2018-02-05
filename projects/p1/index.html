@@ -2,8 +2,12 @@
 
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
     <style>
+
+        @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
+        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
         nav {
             background-color: firebrick;
         }
@@ -16,20 +20,6 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
-        }
-
-        body {
-            font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-weight: 700
         }
 
         header.masthead {
@@ -145,8 +135,6 @@
             padding-bottom: 4rem
         }
 
-        @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
-        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
         .row-section {
             float: left;
             width: 100%;
@@ -255,7 +243,7 @@
                         <a class="nav-link js-scroll-trigger" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+                        <a class="nav-link js-scroll-trigger" href="#Testimonials">Testimonials</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#about">About</a>
@@ -272,15 +260,15 @@
     </nav>
 
     <!-- Carousel -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <!-- Slide One - Set the background image for this slide in the line below -->
-            <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
+            <div class="carousel-item active" style="background-image: url('https://static.pexels.com/photos/842431/pexels-photo-842431.jpeg')">
                 <div class="carousel-caption d-none d-md-block">
                     <h3>First Slide</h3>
                     <p>This is a description for the first slide.</p>
@@ -301,15 +289,17 @@
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
     </div>
+
+    <!-- SECTION -->
     <section class="features-icons bg-light text-center">
         <div class="container">
             <div class="row">
@@ -345,7 +335,7 @@
     </section>
 
     <!-- Image Showcases -->
-    <section class="showcase">
+    <section class="showcase" id = "services">
         <div class="container-fluid p-0">
             <div class="row no-gutters">
 
@@ -373,7 +363,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials text-center bg-light">
+    <section class="testimonials text-center bg-light" id = "Testimonials">
         <div class="container">
             <h2 class="mb-5">What people are saying...</h2>
             <div class="row">
@@ -455,6 +445,10 @@
         </div>
     </div>
     <!--Dragable list -->
+    <!-- Scripts -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

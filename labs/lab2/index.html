@@ -8,7 +8,7 @@
     <div id="home"></div>
     <div id="search">
         <input type="text" id="query">
-        <button type="button" id="search">Search</button>
+        <button type="button" id="btnSearch" onClick = "doSearch()">Search</button>
     </div>
     <div id="results"></div>
 
@@ -18,18 +18,25 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
     <script>
-        var url = "https://api.nytimes.com/svc/movies/v2/reviews/search.json";
+        function doSearch(){
+            var searchInput = $("#query").val();
+            var url = "https://api.nytimes.com/svc/movies/v2/reviews/search.json";
         url += '?' + $.param({
-            'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f"
+            'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f",
+            'query': searchInput
         });
         $.ajax({
             url: url,
             method: 'GET',
-        }).done(function(result) {
-            console.log(result);
+        }).done(function(response) {
+             $.each(response.results, function(i,v){
+            $("#results").append("<p>"+v.display_title + "<br></p>");
+        });
         }).fail(function(err) {
             throw err;
-        });
+        });    
+        }
+    
     </script>
 </body>
 

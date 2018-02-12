@@ -1,29 +1,40 @@
 <html>
+<!--Homework8. Coder: Chris Vinzons IT202Spring18 -->
+<!-- Create an SPA to let users retrieve weather data by U.S. Zip Code
+Use https://developer.yahoo.com/weather/ ;  look at the examples and note that you can pass a zip code instead of a place name
+Page should show a title, brief instructions, an input box, a button, and a display of the results.   Output either the current weather or the forecast.
+File should live at /homework/hw8.html -->
 
 <head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 </head>
 
 <body>
     <h1></h1>
     <p>Looks up the weather by zipcode.</p>
     <input type="text" id="zipCode" placeholder="Zip Code">
-    <button onClick="lookUp()"> Submit</button>
+    <button id="query"> Submit</button>
     <p id="currentWeather"></p>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script>
-        
-        function lookUp() {
-            var callbackFunction = function(data) {
-            var wind = data.query.results.channel.wind;
-            alert(wind.chill);
-                 <script src="https://query.yahooapis.com/v1/public/yql?q=select wind from weather.forecast where woeid in (select woeid from geo.places(1) where text='chicago, il')&format=json&callback=callbackFunction"></script>
-        };
+        function doSearch() {
+            var searchInput = $("#zipCode").val();
+            var url = "https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + searchInput + "')&format=json";
+            $.ajax({
+                url: url,
+                method: 'GET',
+            }).done(function (data) {
+                var weather = data.query.results.channel;
+                $("#currentWeather").empty();
+                $("#currentWeather").append("The weather in " + weather.location.city + " is " + weather.item.condition.temp + " F");
+        }).fail(function (err) {
+            throw err;
+        });
         }
+        $("#query").on("click",doSearch)
     </script>
-
-   
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

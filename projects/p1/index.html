@@ -1,10 +1,44 @@
 <html>
+<!-- You've been meeting with your client about their new website, and after getting a sense of their goals and the type of content they want to show, you've recommended the Landing Page template at https://startbootstrap.com/template-overviews/landing-page/ .   Your client likes the template as a starting point and has asked for the following layout modifications:
+Make the top section a carousel with three items, just like the Modern Business template https://blackrockdigital.github.io/startbootstrap-modern-business/ ;
+Add a second row of features; 
+Make the top nav similar to the Agency theme
+https://blackrockdigital.github.io/startbootstrap-agency/ 
+Make the contact section like the Company theme at 
+https://www.w3schools.com/bootstrap/trybs_theme_company_full.htm
+Add a map below the contact section like the Company theme.
+Add a draggable listing like that at https://bootsnipp.com/snippets/p10Ko
+Change the "What people are saying" section to use cards like the ones at https://bootsnipp.com/snippets/featured/bootstrap-4-card 
+After some discussion, you've convinced the client to put off items 6 and 7 until the next update and to instead focus on getting the basic site up quickly.    Your client is working on marketing copy and images, but they are not ready yet.
+You've decided not to host local versions of Bootstrap, jQuery, Popper, etc. but to use files hosted on content delivery networks when possible.
+Coincidentally, your client's marketing color palette is the same as that of the University of Illinois - Chicago which can be found at http://marketing.uic.edu/marketing-toolbox/university-style-guide/visual-elements/
 
+Project Delivery:
+Page should be viewable at your GitHub pages site, at projects/p1/index.html
+Your image references can either be absolute references to images on other domains or relative references to files stored on your domain.
+Template images should be replaced with images relevant to your client.
+Short text items should be replaced with content relevant to your client;  longer text items should be replaced with "lorem ipsum" placeholder text. (See references below.)
+Address display and map marker location should be those of your client.
+Deadline is February 11, 2018 at 11:59pm
+Delivery is indicated by a commit with a message of final submission
+Resources:
+https://startbootstrap.com/  - templates
+https://bootsnipp.com/ - component gallery
+https://www.lipsum.com/ - placeholder text
+https://picsum.photos/ - image placeholders
+http://lorempixel.com/ - image placeholders
+https://placebear.com/ - image placeholders
+https://placeholder.com/ - image placeholders  (not for project 1)
+http://ipsumimage.appspot.com/ - image placeholders (not for project 1)
+https://pixlr.com/ - image editor web app
+https://www.randombyte.com/advanced-google-images-search-tips-and-tricks/ - searching for images by color palette
+-->
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
+        
     <style>
         @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
         @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
@@ -26,7 +60,7 @@
         header.masthead {
             position: relative;
             background-color: #00B5E2;
-            background: url(../img/bg-masthead.jpg) no-repeat center center;
+            background: url(http://blackrockdigital.github.io/startbootstrap-landing-page/img/bg-masthead.jpg) no-repeat center center;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -112,7 +146,7 @@
         .call-to-action {
             position: relative;
             background-color: #00B5E2;
-            background: url(../img/bg-masthead.jpg) no-repeat center center;
+            background: url(http://blackrockdigital.github.io/startbootstrap-landing-page/img/bg-masthead.jpg) no-repeat center center;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -247,7 +281,7 @@
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">UNQ INS</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -260,9 +294,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#Testimonials">Testimonials</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#team">Team</a>
@@ -350,6 +381,37 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-screen-desktop m-auto text-primary"></i>
+                            </div>
+                            <h3>Fully Responsive</h3>
+                            <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-layers m-auto text-primary"></i>
+                            </div>
+                            <h3>Bootstrap 4 Ready</h3>
+                            <p class="lead mb-0">Featuring the latest build of the new Bootstrap 4 framework!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-check m-auto text-primary"></i>
+                            </div>
+                            <h3>Easy to Use</h3>
+                            <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
 
     <!-- Image Showcases -->
@@ -391,21 +453,21 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="img/testimonials-1.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="http://blackrockdigital.github.io/startbootstrap-landing-page/img/testimonials-1.jpg" alt="">
                         <h5>Margaret E.</h5>
                         <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="http://blackrockdigital.github.io/startbootstrap-landing-page/img/testimonials-2.jpg" alt="">
                         <h5>Fred S.</h5>
                         <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="img/testimonials-3.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="http://blackrockdigital.github.io/startbootstrap-landing-page/img/testimonials-3.jpg" alt="">
                         <h5>Sarah W.</h5>
                         <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
                     </div>
@@ -441,16 +503,16 @@
     <!-- Contact -->
     <section class="text-center">
         <div id="contact" class="container bg-grey">
-            <h2 class="text-center">CONTACT US</h2>
+            <h2 class="text-center"  id = "contact">CONTACT US</h2>
             <div class="row">
                 <div class="col-sm-5">
                     <p>Contact us and we'll get back to you within 24 hours.</p>
                     <p>
-                        <span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
+                        <span class="fa fa-map-marker"></span> Chicago, US</p>
                     <p>
-                        <span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
+                        <span class="fa fa-phone"></span> +00 1515151515</p>
                     <p>
-                        <span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
+                        <span class="fa fa-envelope"></span> myemail@something.com</p>
                 </div>
                 <div class="col-sm-7 slideanim">
                     <div class="row">
@@ -539,11 +601,13 @@
     <!--Dragable list -->
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-agency/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        
 </body>
 
 </html>

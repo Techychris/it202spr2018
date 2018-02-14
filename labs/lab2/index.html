@@ -6,20 +6,14 @@
         .screen {
             display: none;
         }
-
+        .template{
+            padding: 1px;
+        }
     </style>
 </head>
 
 <body>
-    <div id = "template">
-     <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h5 class="card-title">Dark card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-    </div>
+    
     <div class="screen" id="home">
         <button type="button" id="getStarted">Get Started</button>
     </div>
@@ -27,7 +21,15 @@
         <input type="text" id="query">
         <button type="button" id="btnSearch">Search</button>
     </div>
-    <div class="screen" id="results"></div>
+    <div class="screen" id="results"><div class = "template" id = "0">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                   <div class="card-header"></div>
+                   <div class="card-body">
+                       <p class="card-text"></p>
+                   </div>
+               </div>
+           </div>
+        </div>
     
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -39,15 +41,25 @@
                     'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f",
                     'query': searchInput
                 });
-                $("#search").hide();
+
                 $("#results").show();
 
 
                 function loadResponse(response) {
-                    $("#results").empty();
+                    $("#results").append("<div class = 'row'><div class='card-group' id = 'resultsrow'> </div>" );
+
                     $.each(response.results, function(i, v) {
-                        $("#template").clone().appendTo("#results");
+                        var template = $(".template").clone();
+                        template.attr("id",i+1)
+                        template.find(".card").append("<img class= 'img-card-bottom'src ="+ v.multimedia.src +" height = '"+ v.multimedia.height +"' width = '100%'>");
+                        template.find(".card-header").text(v.display_title);
+                        template.find(".card-text").text(v.summary_short);
+                         $("#resultsrow").append(template);
+                        
+                       
+                        
                     });
+                    $(".card").css("height", "35%");
                 }
                 $.ajax({
                     url: url,

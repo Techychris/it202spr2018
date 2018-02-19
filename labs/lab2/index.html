@@ -1,42 +1,87 @@
 <html>
 
 <head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        .screen {
+            display: none;
+        }
+
+        #template {
+            padding: 1px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="home"></div>
-    <div id="search">
-        <input type="text" id="query">
-        <button type="button" id="btnSearch" onClick = "doSearch()">Search</button>
-    </div>
-    <div id="results"></div>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
-    <script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+    <div class="screen" id="home">
+        <button type="button" id="getStarted">Get Started</button>
+    </div>
+    <div class="screen" id="search">
+        <input type="text" id="query">
+        <button type="button" id="btnSearch">Search</button>
+    </div>
+    <div class="screen" id="results">
+        <div id="template">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D"
+        crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous"></script>
     <script>
-        function doSearch(){
+        function doSearch() {
             var searchInput = $("#query").val();
             var url = "https://api.nytimes.com/svc/movies/v2/reviews/search.json";
-        url += '?' + $.param({
-            'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f",
-            'query': searchInput
-        });
-        $.ajax({
-            url: url,
-            method: 'GET',
-        }).done(function(response) {
-             $.each(response.results, function(i,v){
-            $("#results").append("<p>"+v.display_title + "<br></p>");
-        });
-        }).fail(function(err) {
-            throw err;
-        });    
+            url += '?' + $.param({
+                'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f",
+                'query': searchInput
+            });
+            $("#search").hide();
+            $("#results").show();
+            
+            function loadResponse(response) {
+                $("#results").append("<div class ='row'><div class = 'card-group' id = 'resultsrow'</div></div>");
+                $.each(response.results, function (i, v) {
+                    var template = $("#template").clone();
+                    template.find(".card-header").text(v.display_title);
+                    template.find(".card-text").text(v.summary_short);
+                    $("#resultsrow").append(template);
+                });
+                $(".card").draggable();
+                $(".card").css("height", "35%");
+            }
+            $.ajax({
+                url: url,
+                method: 'GET',
+            }).done(function (response) {
+                loadResponse(response)
+            }).fail(function (err) {
+                throw err;
+            });
         }
-    
+        $(".card").on("click",function(){
+            $(this).css({
+                "z-index":"10000",
+                "background-color":"lightgrey"
+            })
+        })
+        $("#btnSearch").on("click", doSearch)
+        $("#getStarted").on("click", function () { $("#home").hide();$("#search").show();})
+        //This shows the home screen when the document is ready.
+        $(function () {$("#home").show()});
+
     </script>
 </body>
 

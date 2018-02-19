@@ -48,10 +48,9 @@
                 'api-key': "ef069e37bc4d4f8cb54ff83171f4ed9f",
                 'query': searchInput
             });
-
+            $("#search").hide();
             $("#results").show();
-
-
+            
             function loadResponse(response) {
                 $("#results").append("<div class ='row'><div class = 'card-group' id = 'resultsrow'</div></div>");
                 $.each(response.results, function (i, v) {

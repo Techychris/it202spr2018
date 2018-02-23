@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <style>
+        :root {
+            --normPad: 7%;
+        }
+
+        #intro {
+            background-image: url("https://static.pexels.com/photos/356065/pexels-photo-356065.jpeg");
+        }
+
+        .card {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: var(--normPad);
+            background-color: rgba(255,255,255,.5);
+        }
+        #myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="Coverr-office.mp4" type="video/mp4">
+    </video>
+    <div id="intro">
+        <div class="card">
+            <h2>Chicago Public Schools
+                <span style="color:green;">.</span>
+            </h2>
+            <p> Choose a Chicago Public School type
+                <span style="color:green;">.</span>
+                This will show where the chosen school types are
+                <span style="color:green;">.</span>
+                <br> The data comes from:
+                <br>
+                <a href="https://data.cityofchicago.org/Education/Chicago-Public-Schools-School-Profile-Information-/8i6r-et8s">Chicago Public Schools - School Profile Information SY1617</a>
+            </p>
+            <button id="btnIntro" class="btn" type="button">continue</button>
+        </div>
+    </div>
+    <div id="inputSchools" style="display:none">
+        <div class="card">
+            <h2>Input
+                <span style="color:green;">.</span>
+            </h2>
+            <p> Choose a Chicago Public School type
+                <span style="color:green;">:</span>
+            </p>
+            <select>
+                <option value="">Choose your option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+                <option value="4">Option 1</option>
+                <option value="5">Option 2</option>
+                <option value="6">Option 3</option>
+            </select>
+        </div>
+    </div>
+    <script>
+        $("#btnIntro").on("click", function () { $("#intro").hide(); $("#inputSchools").show(); })
+
+
+        // video stuff
+
+
+    </script>
+</body>
+
+</html>

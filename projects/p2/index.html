@@ -11,11 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <style>
         :root {
-            --normPad: 7%;
-        }
-
-        #intro {
-            background-image: url("https://static.pexels.com/photos/356065/pexels-photo-356065.jpeg");
+            --normPad: 10%;
         }
 
         .card {
@@ -55,7 +51,7 @@
                 <br>
                 <a href="https://data.cityofchicago.org/Education/Chicago-Public-Schools-School-Profile-Information-/8i6r-et8s">Chicago Public Schools - School Profile Information SY1617</a>
             </p>
-            <button id="btnIntro" class="btn" type="button">continue</button>
+            <button id="btnIntro" class="btn" type="button">Continue</button>
         </div>
     </div>
     <div id="inputSchools" style="display:none">
@@ -66,24 +62,37 @@
             <p> Choose a Chicago Public School type
                 <span style="color:green;">:</span>
             </p>
-            <select>
-                <option value="">Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="4">Option 1</option>
-                <option value="5">Option 2</option>
-                <option value="6">Option 3</option>
+            <select multiple>
+                <option value="1">Career academy</option>
+                <option value="2">Charter</option>
+                <option value="3">Citywide-Option</option>
+                <option value="4">Classical</option>
+                <option value="5">Contract</option>
+                <option value="6">Magnet</option>
+                <option value="7">Military Academy</option>
+                <option value="8">Neighborhood</option>
+                <option value="9">Region gifted center</option>
+                <option value="10">Selective enrollment</option>
+                <option value="11">Small</option>
+                <option value="12">Special Education</option>
             </select>
+            <button id="btnInput" class="btn" type="button">Continue</button>
+        </div>
+    </div>
+    <div id = "results" style = "display:none">
+        <div class ="card">
+
         </div>
     </div>
     <script>
+        //Constructor
+        $(()=>{
+            $(document).ready(function() {
+        $('select').material_select();
+    });
+        })
+        $("#btnInput").on("click", function () { $("#inputSchools").hide(); $("#results").show(); })
         $("#btnIntro").on("click", function () { $("#intro").hide(); $("#inputSchools").show(); })
-
-
-        // video stuff
-
-
     </script>
 </body>
 

@@ -2,8 +2,7 @@
 
 <head>
     <!-- JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
@@ -11,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <style>
         :root {
-            --normPad: 14%;
+            --normPad: 5%;
         }
 
         .card {
@@ -52,20 +51,18 @@
             z-index: 0;
 
         }
-       
     </style>
 </head>
 
 <body>
-    <!--  <video autoplay muted loop id="myVideo">
+    <video autoplay muted loop id="myVideo">
         <source src="Coverr-office.mp4" type="video/mp4">
-    </video> -->
+    </video>
     <div id="intro">
         <div class="card">
             <h2>Chicago Public Schools<span style="color:green;">.</span>
             </h2>
-            <p> Choose a Chicago Public School type<span style="color:green;">.</span>
-                This will show where the chosen school types are<span style="color:green;">.</span>
+            <p> Choose a Chicago Public School type<span style="color:green;">.</span> This will show where the chosen school types are<span style="color:green;">.</span>
                 <br><br> The data comes from:
                 <br>
                 <a href="https://data.cityofchicago.org/Education/Chicago-Public-Schools-School-Profile-Information-/8i6r-et8s">Chicago Public Schools - School Profile Information SY1617</a>
@@ -75,11 +72,15 @@
     </div>
     <div id="inputSchools" style="display:none">
         <div class="card">
-            <h2>Choose your School Type<span style="color:green;">.</span>
-            </h2>
-            <p> Choose a Chicago Public School type<span style="color:green;">:</span>
-            </p>
-            <select multiple>
+            <div class="row">
+                <div class="col 6">
+                    <h2>Choose your School Type<span style="color:green;">.</span>
+                    </h2>
+                    <p> Choose a Chicago Public School type<span style="color:green;">:</span>
+                    </p>
+                </div>
+                <div class="col 6">
+                    <select multiple>
                 <option value="1">Career academy</option>
                 <option value="2">Charter</option>
                 <option value="3">Citywide-Option</option>
@@ -92,22 +93,23 @@
                 <option value="10">Selective enrollment</option>
                 <option value="11">Small</option>
                 <option value="12">Special Education</option>
-            </select>
-            <button id="btnInput" class="btn" type="button">Continue</button>
+                </select>
+                    <button id="btnInput" class="btn" type="button">Map</button>
+                </div>
+            </div>
         </div>
     </div>
-   
+
     <div id="results" style="display:none">
         <div id="map"></div>
         <div id="resultsInfo">
-                <h2>Schools</h2>
-                <div id = "schoolList"></div>
-                <button id = "btnReturn" class = "btn">Select New Inputs</button>
+            <h2>Schools</h2>
+            <div id="schoolList"></div>
+            <button id="btnReturn" class="btn">Select New Inputs</button>
         </div>
     </div>
 
     <script>
-        
         //Constructor
         $(() => {
             $('select').material_select();
@@ -125,9 +127,18 @@
             });
         }
         //event handler
-        $("#btnReturn").on("click", function () { $("#results").hide(); $("#inputSchools").show(); })
-        $("#btnInput").on("click", function () { $("#inputSchools").hide(); $("#results").show(); });
-        $("#btnIntro").on("click", function () { $("#intro").hide(); $("#inputSchools").show(); });
+        $("#btnReturn").on("click", function() {
+            $("#results").hide();
+            $("#inputSchools").show();
+        })
+        $("#btnInput").on("click", function() {
+            $("#inputSchools").hide();
+            $("#results").show();
+        });
+        $("#btnIntro").on("click", function() {
+            $("#intro").hide();
+            $("#inputSchools").show();
+        });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=REPLACE_WITH_GOOGLE_API_KEY&callback=initMap">
     </script>

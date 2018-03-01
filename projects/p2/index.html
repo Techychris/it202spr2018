@@ -55,9 +55,9 @@
 </head>
 
 <body>
-    <video autoplay muted loop id="myVideo">
+   <video autoplay muted loop id="myVideo"> 
         <source src="Coverr-office.mp4" type="video/mp4">
-    </video>
+    </video> 
     <div id="intro">
         <div class="card">
             <h2>Chicago Public Schools<span style="color:green;">.</span>
@@ -73,13 +73,13 @@
     <div id="inputSchools" style="display:none">
         <div class="card">
             <div class="row">
-                <div class="col 6">
+                <div class="col l6">
                     <h2>Choose your School Type<span style="color:green;">.</span>
                     </h2>
                     <p> Choose a Chicago Public School type<span style="color:green;">:</span>
                     </p>
                 </div>
-                <div class="col 6">
+                <div class="col l12">
                     <select multiple>
                 <option value="1">Career academy</option>
                 <option value="2">Charter</option>
@@ -116,9 +116,9 @@
         })
         //map api
         function initMap() {
-            var uluru = { lat: -25.363, lng: 131.044 };
+            var uluru = { lat: 41.8781, lng: -87.6298 };
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
+                zoom: 12,
                 center: uluru
             });
             var marker = new google.maps.Marker({

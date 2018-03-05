@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>game</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="400" height="600"></canvas>
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        class player {
+            constructor() {
+                this.x = 30;
+                this.y = c.height / 2;
+                this.color = "green";
+                this.radius = 25;
+            }
+            update() {
+                this.y--;
+                if (this.x <= 0) {
+                    this.x = this.width;
+                }
+            }
+            render() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+                ctx.fill();
+
+            }
+        }
+        class harm {
+            constructor() {
+                this.x = c.height / 2;
+                this.y = y;
+                this.height = height;
+                this.width = width;
+                this.color = "green";
+                this.radius = 25;
+            }
+            update() {
+                this.y--;
+                if (this.x <= 0) {
+                    this.x = this.width;
+                }
+            }
+            render() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+        class benefit {
+            constructor(y, speed) {
+                this.speed = speed;
+                this.x = c.width;
+                this.y = y;
+                this.color = "blue";
+                this.radius = 25;
+            }
+            update() {
+                this.x -= this.speed;
+                if (this.x <= 0) {
+                    this.x = c.width;
+                }
+            }
+            render() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+                ctx.fill();
+
+            }
+        }
+
+        function dist(obj1, obj2) {
+            var dx = obj1.x - obj2.x;
+            var dy = obj1.y - obj2.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            return distance;
+        }
+        var game = {
+            lives: 3,
+            score: 0,
+            level: 1
+        };
+        let p1 = new player();
+        var harms = [];
+        var benfits = [];
+        var beni = new benefit(Math.floor(Math.random() * c.height), 5);
+        benfits.push(beni);
+
+        function draw() {
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            if (game.score > 5) {
+                game.level += 1;
+            }
+            p1.render();
+            benfits.forEach(function(element) {
+                element.update();
+                element.render();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        // TODO:  keyboard events to change player y coordinate
+        $(document).keydown(function(event) {
+            if (event.which == 38) {
+                p1.y -= 5;
+            } else if (event.which == 40) {
+                p1.y += 5;
+            }
+        });
+
+        // TODO:  space bar to pause game
+
+    </script>
+</body>
+
+</html>

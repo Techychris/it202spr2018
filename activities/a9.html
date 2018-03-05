@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <!-- Replace the value of the key parameter with your own API key. -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=REPLACE_WITH_GOOGLE_API_KEY&callback=initMap">
+
+
+    </script>
+    <script>
+        // This example displays a marker at the center of Australia.
+        // When the user clicks the marker, an info window opens.
+
+        function initMap() {
+            var url = "https://data.cityofchicago.org/resource/twfh-866z.json";
+            
+            
+            $.get(url).done(function(response) {
+                var longLad = {
+                lat: ,
+                lng: -87.6298
+            };
+                var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: longLad
+            });
+                $.each(response, function(i, v) {
+                    var contentString = "<p>" + v.intersection + "</p>";
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: {
+                            lat: parseFloat(v.latitude),
+                            lng: parseFloat(v.longitude)
+                        },
+                        map: map,
+                        title: v.intersection
+                    });
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+                });
+            });
+
+        }
+
+    </script>
+</body>
+
+</html>

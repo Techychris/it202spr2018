@@ -6,6 +6,7 @@
         crossorigin="anonymous"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css">
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -149,7 +150,7 @@
                 zoom: 13,
                 center: chicago,
             });
-            for(var i =0; i < markers.length; i ++){
+            for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(docMap);
             }
         }
@@ -158,6 +159,7 @@
             $("#btnReturn").on("click", function () {
                 $("#results").hide();
                 $("#inputSchools").show();
+                $("#schoolList").empty();
             })
             $("#btnInput").on("click", function () {
                 $("#inputSchools").hide();
@@ -169,13 +171,46 @@
                 var url = "https://data.cityofchicago.org/resource/76dk-7ieb.json?$select=* where school_type IN (" + listOfSchoolTypes + ")";
                 $.get(url, function (res) {
                     $.each(res, function (i, v) {
-                        $("#schoolList").append("<p>" + v.short_name + "</p>")
+                        $("#schoolList").append("<p>" + v.short_name + "--" + v.school_type + "</p>")
                         var LatLng = { lat: parseFloat(v.school_latitude), lng: parseFloat(v.school_longitude) };
+                        switch (v.school_type) {
+                            case "Charter":
+                               image = "icons/Charter.png";
+                                break;
+                            case "Citywide-Option":
+                            image = "icons/Citywide-Option.png";
+                                break;
+                            case "Classical":
+                            image = "icons/Classical.png";
+                                break;
+                            case "Contract":
+                                image = "icons/Contract.png";
+                                break;
+                            case "Magnet":
+                                image = "icons/Magnet.png";
+                                break;
+                            case "Military Academy":
+                                image = "icons/Military Academy.png";
+                                break;
+                            case "Region gifted center":
+                                image = "icons/Region gifted cente.png";
+                                break;
+                            case "Selective enrollment":
+                                image = "icons/Selective enrollment.png";
+                                break;
+                            case "Small":
+                                image = "icons/Small.png";
+                                break;
+                            case "Special Education":
+                                image = "icons/Special Education.png";
+                                break;
+                        }
                         var marker = new google.maps.Marker({
                             position: LatLng,
-                            title: v.short_name
+                            title: v.short_name,
+                            icon: image
                         });
-                        markers.push(marker)              
+                        markers.push(marker)
                     })
                     initMap(markers);
                 })

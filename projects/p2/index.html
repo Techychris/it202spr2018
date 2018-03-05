@@ -2,7 +2,8 @@
 
 <head>
     <!-- JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
@@ -60,10 +61,14 @@
     </video>
     <div id="intro">
         <div class="card">
-            <h2>Chicago Public Schools<span style="color:green;">.</span>
+            <h2>Chicago Public Schools
+                <span style="color:green;">.</span>
             </h2>
-            <p> Choose a Chicago Public School type<span style="color:green;">.</span> This will show where the chosen school types are<span style="color:green;">.</span>
-                <br><br> The data comes from:
+            <p> Choose a Chicago Public School type
+                <span style="color:green;">.</span> This will show where the chosen school types are
+                <span style="color:green;">.</span>
+                <br>
+                <br> The data comes from:
                 <br>
                 <a href="https://data.cityofchicago.org/Education/Chicago-Public-Schools-School-Profile-Information-/8i6r-et8s">Chicago Public Schools - School Profile Information SY1617</a>
             </p>
@@ -74,26 +79,28 @@
         <div class="card">
             <div class="row">
                 <div class="col 6">
-                    <h2>Choose your School Type<span style="color:green;">.</span>
+                    <h2>Choose your School Type
+                        <span style="color:green;">.</span>
                     </h2>
-                    <p> Choose a Chicago Public School type<span style="color:green;">:</span>
+                    <p> Choose a Chicago Public School type
+                        <span style="color:green;">:</span>
                     </p>
                 </div>
                 <div class="col 6">
                     <select multiple>
-                <option value="1">Career academy</option>
-                <option value="2">Charter</option>
-                <option value="3">Citywide-Option</option>
-                <option value="4">Classical</option>
-                <option value="5">Contract</option>
-                <option value="6">Magnet</option>
-                <option value="7">Military Academy</option>
-                <option value="8">Neighborhood</option>
-                <option value="9">Region gifted center</option>
-                <option value="10">Selective enrollment</option>
-                <option value="11">Small</option>
-                <option value="12">Special Education</option>
-                </select>
+                        <option value="Career academy">Career academy</option>
+                        <option value="Charter">Charter</option>
+                        <option value="Citywide-Option">Citywide-Option</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Magnet">Magnet</option>
+                        <option value="Military Academy">Military Academy</option>
+                        <option value="Neighborhood">Neighborhood</option>
+                        <option value="Region gifted center">Region gifted center</option>
+                        <option value="Selective enrollment">Selective enrollment</option>
+                        <option value="Small">Small</option>
+                        <option value="Special Education">Special Education</option>
+                    </select>
                     <button id="btnInput" class="btn" type="button">Map</button>
                 </div>
             </div>
@@ -111,31 +118,43 @@
 
     <script>
         //Constructor
+        var markers = [];
+        var listOfSchoolTypes = "";
         $(() => {
             $('select').material_select();
         })
         //map api
         function initMap() {
-            var uluru = { lat: -25.363, lng: 131.044 };
+            var chicago = { lat: -25.363, lng: 131.044 };
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 4,
-                center: uluru
+                center: chicago
             });
-            var marker = new google.maps.Marker({
-                position: uluru,
-                map: map
-            });
+
         }
+
+       
         //event handler
-        $("#btnReturn").on("click", function() {
+        $("#btnReturn").on("click", function () {
             $("#results").hide();
             $("#inputSchools").show();
         })
-        $("#btnInput").on("click", function() {
+        $("#btnInput").on("click", function () {
             $("#inputSchools").hide();
             $("#results").show();
+            $("option:selected").each(function () {
+                listOfSchoolTypes += "'"+$(this).val() + "',";
+            });
+            listOfSchoolTypes = listOfSchoolTypes.slice(0,listOfSchoolTypes.length-1)
+            var url = "https://data.cityofchicago.org/resource/76dk-7ieb.json?$select=* where school_type IN (" + listOfSchoolTypes + ")";
+            $.get(url,function(res){
+                $.each(res, function(i,v){
+                    console.log(res,i.school_latitude,i.schools_latitude);
+                })
+            })
+           
         });
-        $("#btnIntro").on("click", function() {
+        $("#btnIntro").on("click", function () {
             $("#intro").hide();
             $("#inputSchools").show();
         });

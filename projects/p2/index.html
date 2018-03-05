@@ -52,13 +52,35 @@
             z-index: 0;
 
         }
+
+        #schoolList {
+            max-height: 75vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            /* width */
+            ::-webkit-scrollbar {
+                width: 20px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 5px grey;
+                border-radius: 10px;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #4caf50;
+                border-radius: 10px;
+            }
+        }
     </style>
 </head>
 
 <body>
-   <video autoplay muted loop id="myVideo"> 
+    <video autoplay muted loop id="myVideo">
         <source src="Coverr-office.mp4" type="video/mp4">
-    </video> 
+    </video>
     <div id="intro">
         <div class="card">
             <h2>Chicago Public Schools
@@ -78,14 +100,9 @@
     <div id="inputSchools" style="display:none">
         <div class="card">
             <div class="row">
-<<<<<<< HEAD
                 <div class="col 6">
                     <h2>Choose your School Type
                         <span style="color:green;">.</span>
-=======
-                <div class="col l6">
-                    <h2>Choose your School Type<span style="color:green;">.</span>
->>>>>>> 87c54ba34e27d48377e38adf3b77fb9176644c77
                     </h2>
                     <p> Choose a Chicago Public School type
                         <span style="color:green;">:</span>
@@ -125,57 +142,55 @@
         //Constructor
         var markers = [];
         var listOfSchoolTypes = "";
+        var docMap;
+        function initMap(markers) {
+            var chicago = { lat: 41.8781, lng: -87.6298 };
+            var docMap = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: chicago,
+            });
+            for(var i =0; i < markers.length; i ++){
+                markers[i].setMap(docMap);
+            }
+        }
         $(() => {
             $('select').material_select();
-        })
-        //map api
-        function initMap() {
-<<<<<<< HEAD
-            var chicago = { lat: -25.363, lng: 131.044 };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: chicago
-=======
-            var uluru = { lat: 41.8781, lng: -87.6298 };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: uluru
-            });
-            var marker = new google.maps.Marker({
-                position: uluru,
-                map: map
->>>>>>> 87c54ba34e27d48377e38adf3b77fb9176644c77
-            });
-
-        }
-
-       
-        //event handler
-        $("#btnReturn").on("click", function () {
-            $("#results").hide();
-            $("#inputSchools").show();
-        })
-        $("#btnInput").on("click", function () {
-            $("#inputSchools").hide();
-            $("#results").show();
-            $("option:selected").each(function () {
-                listOfSchoolTypes += "'"+$(this).val() + "',";
-            });
-            listOfSchoolTypes = listOfSchoolTypes.slice(0,listOfSchoolTypes.length-1)
-            var url = "https://data.cityofchicago.org/resource/76dk-7ieb.json?$select=* where school_type IN (" + listOfSchoolTypes + ")";
-            $.get(url,function(res){
-                $.each(res, function(i,v){
-                    console.log(res,i.school_latitude,i.schools_latitude);
-                })
+            $("#btnReturn").on("click", function () {
+                $("#results").hide();
+                $("#inputSchools").show();
             })
-           
-        });
-        $("#btnIntro").on("click", function () {
-            $("#intro").hide();
-            $("#inputSchools").show();
-        });
+            $("#btnInput").on("click", function () {
+                $("#inputSchools").hide();
+                $("#results").show();
+                $("option:selected").each(function () {
+                    listOfSchoolTypes += "'" + $(this).val() + "',";
+                });
+                listOfSchoolTypes = listOfSchoolTypes.slice(0, listOfSchoolTypes.length - 1)
+                var url = "https://data.cityofchicago.org/resource/76dk-7ieb.json?$select=* where school_type IN (" + listOfSchoolTypes + ")";
+                $.get(url, function (res) {
+                    $.each(res, function (i, v) {
+                        $("#schoolList").append("<p>" + v.short_name + "</p>")
+                        var LatLng = { lat: parseFloat(v.school_latitude), lng: parseFloat(v.school_longitude) };
+                        var marker = new google.maps.Marker({
+                            position: LatLng,
+                            title: v.short_name
+                        });
+                        markers.push(marker)              
+                    })
+                    initMap(markers);
+                })
+
+            });
+            $("#btnIntro").on("click", function () {
+                $("#intro").hide();
+                $("#inputSchools").show();
+            });
+        })
+
+        //map api
+
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=REPLACE_WITH_GOOGLE_API_KEY&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=REPLACE_WITH_GOOGLE_API_KEY">
     </script>
 </body>
 

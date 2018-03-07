@@ -9,17 +9,31 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" width="400" height="600"></canvas>
+    <canvas id="myCanvas" width="100vw" height="100vh"></canvas>
     <script>
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
+        var game = {
+            lives: 3,
+            score: 10,
+            level: 1,
+            levelCounter:1,
+            state: ""
+        };
+        var p1;
+        var harms = [];
+        var benfits = [];
+        
         class player {
             constructor(life) {
+                var img = new Image();
+                img.src = "img/player.png";
+                this.img = img;
                 this.life = life;
                 this.x = 30;
                 this.y = c.height / 2;
                 this.color = "green";
-                this.radius = 25;
+                this.radius = img.height;
             }
             update() {
                 this.y--;
@@ -32,22 +46,25 @@
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
                 ctx.fill();
-
+                ctx.drawImage(this.img,this.x-this.img.width/2,this.y-this.img.height/2);
             }
         }
         class harm {
             constructor(y, speed) {
+                var img = new Image();
+                img.src = "img/harm.png";
+                this.img = img;
                 this.speed = speed;
                 this.x = c.width / 2;
                 this.y = y;
                 this.color = "red";
-                this.radius = 25;
+                this.radius = img.height;
             }
             returnZero() {
                 this.x = c.width;
             }
-            update() {
-                this.x -= this.speed;
+            update(multiplier) {
+                this.x -= this.speed * multiplier;
                 if (this.x + this.radius <= 0) {
                     this.x = c.width;
                     this.y = Math.random() * c.height;
@@ -58,6 +75,8 @@
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
                 ctx.fill();
+                ctx.drawImage(this.img,this.x-this.img.width/2,this.y-this.img.height/2);
+                
             }
         }
         class benefit {
@@ -65,7 +84,7 @@
                 this.speed = speed;
                 this.x = c.width;
                 this.y = y;
-                this.color = "blue";
+                
                 this.radius = 25;
             }
             returnZero() {
@@ -91,63 +110,78 @@
             var dx = obj1.x - obj2.x;
             var dy = obj1.y - obj2.y;
             var distance = Math.sqrt(dx * dx + dy * dy);
-            return distance - (obj1.radius + obj2.radius) >= 0;
+            return distance - (obj1.radius + obj2.radius) <= 0;
         }
-        var game = {
-            lives: 3,
-            score: 0,
-            level: 1
-        };
-        let p1 = new player(3);
-        var harms = [];
-        var benfits = [];
-        var beni = new benefit(Math.floor(Math.random() * c.height), 5);
-        var h1 = new harm(Math.floor(Math.random() * c.height), 5);
-        benfits.push(beni);
-        harms.push(h1);
+       
+        function init(){
+            p1 = new player(3);
+            var beni = new benefit(Math.floor(Math.random() * c.height), 5);
+            var h1 = new harm(Math.floor(Math.random() * c.height), 5);
+            game.state = "started"
+            benfits.push(beni);
+            harms.push(h1);
+        }
+        
 
         function draw() {
+            
             ctx.clearRect(0, 0, c.width, c.height);
-            if (game.score > 5) {
+            ctx.font = "16px Arial";
+            var stats = "Score:" + game.score +" Level:"+game.level + " Lives:" + p1.life + " Till Next Level: "+ (5 *game.level-game.levelCounter);
+            var multiplier =1;
+            ctx.fillText(stats ,10,30);
+            if (game.levelCounter == 5 * (game.level)) {
                 game.level += 1;
+                game.levelCounter = 1;
+                multiplier+= .5;
             }
+            
+            //renders player
             p1.render();
+            // for each benefit 
             benfits.forEach(function(element) {
-                if (!col(p1, element)) {
-                    console.log("collision detected ++" + game.score);
+                if (col(p1, element)) {
+                    console.log(stats);
                     element.returnZero();
-                    game.score += 1;
+                    game.score += 10;
+                    game.levelCounter++;
                 }
                 element.update();
                 element.render();
             });
+
+            // for each harm
             harms.forEach(function(element) {
-                if (!col(p1, element)) {
-                    console.log("collision detected -- " + p1.life);
+                if (col(p1, element)) {
+                    console.log(stats);
                     element.returnZero();
-                    p1--;
+                    p1.life--;
+                    game.score-=10;
                 }
-                element.update();
+                element.update(multiplier);
                 element.render();
             });
             if (p1.life <= 0) {
+                game.state = "end";
                 $("canvas").hide();
             }
-            requestAnimationFrame(draw);
+            if(game.state != "end"){
+                requestAnimationFrame(draw);
+            }
+           
         }
+        init();
         draw();
 
-        // TODO:  keyboard events to change player y coordinate
         $(document).keydown(function(event) {
             if (event.which == 38) {
                 p1.y -= 10;
             } else if (event.which == 40) {
                 p1.y += 10;
             }
-            //if(event.which ==)
         });
 
-        // TODO:  space bar to pause game
+
     </script>
 </body>
 

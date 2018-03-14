@@ -28,7 +28,9 @@
             //
             // Display the result
             //
-            $("#results").append("<p>" + store. + "</p>");
+             store.each(function (resturant){
+                $("#results").append("<p>" + resturant.cuisine + "</p>");
+             }); 
         }).catch(function (error) {
             //
             // Finally don't forget to catch any error

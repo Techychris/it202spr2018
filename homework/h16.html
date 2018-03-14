@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Include Dexie -->
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script>
+        
+        //
+        // Define your database
+        //
+        var db = new Dexie("AppDB");
+        db.version(1).stores({
+            Resturants: '++i,name,cuisine'
+        });
+
+        //
+        // Put some data into it
+        //
+        db.Resturants.bulkAdd([{ name: "store1", cuisine: "Thai" }, { name: "store2", cuisine: "Japanese" }, { name: "store3", cuisine: "Korean" }]).then(function () {
+            //
+            // Then when data is stored, read from it
+            //
+            return db.Resturants.where('cuisine').equals("Thai");
+        }).then(function (store) {
+            //
+            // Display the result
+            //
+            $("#results").append("<p>" + store. + "</p>");
+        }).catch(function (error) {
+            //
+            // Finally don't forget to catch any error
+            // that could have happened anywhere in the
+            // code blocks above.
+            //
+            alert("Ooops: " + error);
+        });
+        
+    </script>
+
+    <body>
+
+        <div id="results"></div>
+    </body>
+</head>
+
+</html>

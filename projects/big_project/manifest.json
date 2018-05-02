@@ -1,0 +1,15 @@
+{
+    "short_name": "202",
+    "name": "202 - IT 202",
+    "display": "standalone",
+    "theme_color": "#b22222",
+    "background_color":  "#b22222",
+    "icons": [
+      {
+        "src": "icon.svg",
+        "type": "image/png",
+        "sizes": "192x192"
+      }
+    ],
+    "start_url": "index.html"
+  }

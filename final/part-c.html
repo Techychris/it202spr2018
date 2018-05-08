@@ -17,8 +17,10 @@
     $("button").on("click",function(){
         url = "https://www.googleapis.com/language/translate/v2?key=REPLACE_WITH_GOOGLE_API_KEY&source=en&target=es&q=" + $("input").val();
         $.get(url, function (res) {
-            console.log(res);
-        $("div").append("<p>"+res+"</p>");
+        console.log(res);
+        $.each(res, function (i, v) {
+            $("div").append("<p>"+res.data.translations+"</p>");
+        }
      });
     });
     

@@ -1,0 +1,27 @@
+<html>
+<head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+        <style>
+            div{
+                font-family: 'Open Sans Condensed', sans-serif;;
+            }
+        </style>
+</head>
+<body>
+    <h1>Option 2</h1>
+    <input type = "text"> <button> translate</button>
+    <div></div>
+    <script>
+    $("button").on("click",function(){
+        url = "https://www.googleapis.com/language/translate/v2?key=REPLACE_WITH_GOOGLE_API_KEY&source=en&target=es&q=" + $("input").val();
+        $.get(url, function (res) {
+            console.log(res);
+        $("div").append("<p>"+res+"</p>");
+     });
+    });
+    
+    </script>
+</body>
+</html>

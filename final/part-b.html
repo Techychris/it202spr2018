@@ -10,14 +10,23 @@
 </head>
 
 <body>
-<button id ="finalbtn">Continue</button>
+    <div id = "initScreen">
+            <button id ="finalbtn">Continue</button>
+    </div>
+    <div id = "groupScreen">
+
+    </div>
+
 <script>
     $("#finalbtn").on("click", function(){
         var url = "https://data.cityofchicago.org/resource/t57k-za2y.json";     
         $.get(url, function (res) {
             console.log(res);
+            $.each(res, function (i, v) {
+                $("#groupScreen").append("<a href = '#' class = 'list-group-item list-group-item-action flex-column align-items-start'> <div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>"+v.site_name+"</h5><small>"+v.clinic_type+"</small></div><p class  = 'mb1'> "+v.street_address +"<br>"+v.city +", "+v.state+" "+v.zip +"<br>" + v.phone_1 + "</p><small>"+v.hours_of_operation +"</small></a>");
+            });
         }); 
-    })
+    });
 </script>
 </body>
 

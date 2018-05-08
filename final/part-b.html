@@ -11,6 +11,14 @@
 
 <body>
 <button id ="finalbtn">Continue</button>
+<script>
+    $("#finalbtn").on("click", function(){
+        var url = "https://data.cityofchicago.org/resource/t57k-za2y.json";     
+        $.get(url, function (res) {
+            console.log(res);
+        }); 
+    })
+</script>
 </body>
 
 </html>

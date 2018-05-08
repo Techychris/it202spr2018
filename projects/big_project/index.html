@@ -4,8 +4,115 @@
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" type = "text/css" href="bundle.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
+    <link rel="stylesheet" type="text/css" href="bundle.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+         :root {
+            --normPad: 5%;
+        }
+        .card {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: var(--normPad);
+            background-color: rgba(255, 255, 255, .5);
+        }
+        html,
+        body {
+            height: 100%;
+            background: #111;
+        }
+
+        h1 {
+            color: white;
+            animation: bright 10s infinite alternate ease;
+            opacity: .5;
+            text-align: center;
+        }
+
+        .wrapper {
+            position: absolute;
+            width: 50%;
+            height: 5px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto
+        }
+
+
+        .loader {
+            height: 100%;
+            display: flex;
+            transform: translateZ(0);
+        }
+
+        .loader div {
+            flex: 1;
+            background: #b22222;
+            animation: go 3s infinite alternate ease;
+            box-shadow: 0 0 50px #b22222;
+        }
+
+        .loader div:nth-child(1) {
+            animation-delay: -1s;
+        }
+
+        .loader div:nth-child(2) {
+            animation-delay: -.9s;
+        }
+
+        .loader div:nth-child(3) {
+            animation-delay: -.8s;
+        }
+
+        .loader div:nth-child(4) {
+            animation-delay: -.7s;
+        }
+
+        .loader div:nth-child(5) {
+            animation-delay: -.6s;
+        }
+
+        .loader div:nth-child(6) {
+            animation-delay: -.5s;
+        }
+
+        .loader div:nth-child(7) {
+            animation-delay: -.4s;
+        }
+
+        .loader div:nth-child(8) {
+            animation-delay: -.3s;
+        }
+
+        .loader div:nth-child(9) {
+            animation-delay: -.2s;
+        }
+
+        .loader div:nth-child(10) {
+            animation-delay: -.1s;
+        }
+
+        @keyframes go {
+            100% {
+                background: transparent;
+                flex: 3;
+                box-shadow: 0 0 0 transparent;
+            }
+        }
+        #home{
+            display: none;
+        }
+        #settings{
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="mdc-typography">
@@ -24,12 +131,54 @@
         </div>
     </div>
 
-    <div>
-            <h1 class="mdc-typography--headline1">Hello there.</h1>
+    <div class="card">
+        <h1 class="mdc-typography--headline1">Hello there.</h1>
+        <br>
+        <h2 class="mdc-typography--headline3">Enter your name below.</h2>
+        <div class="mdc-text-field">
+                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <label class="mdc-floating-label" for="my-text-field">Name:</label>
+                <div class="mdc-line-ripple"></div>
+              </div>
+        <br>
+        <h2 class="mdc-typography--headline3">Enter your zipcode below.</h2>
+        <div class="mdc-text-field">
+                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <label class="mdc-floating-label" for="my-text-field">Zipcode:</label>
+                <div class="mdc-line-ripple"></div>
+              </div>
+              <button class="mdc-button mdc-button--outlined">
+                    Continue
+                  </button>
+    <div class="card" id = "home">
+        <h1 id = "home-header"></h1>
+    </div>
+    <div class="card" id = "settings">
 
     </div>
 </body>
-<script type="text/javascript">$('#loading').remove();</script>
-<script type="text/javascript" src="bundle.js" async></script>
+<script type="text/javascript">
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+    $(document).ready(function () {
+        $("#btnContinue").on("click", function() {
+
+        });
+        $('#loading').remove();
+        $('.start').show();
+        var url = "api.openweathermap.org/data/2.5/weather?zip="+ zip +",us"
+    });
+
+</script>
+
 
 </html>

@@ -50,6 +50,8 @@
         }
 
         $("#finalbtn").on("click", function () {
+            markers = [];
+            $("#groupdiv").empty();
             $("#map").show();
             var url = "https://data.cityofchicago.org/resource/t57k-za2y.json?clinic_type=" + $("#clinicselect option:selected").text();
             $.get(url, function (res) {

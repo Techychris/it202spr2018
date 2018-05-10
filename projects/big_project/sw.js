@@ -1,8 +1,9 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
-  '/bundle.css',
-  '/bundle.js'
+  '/index.html',
+  '/icon.png',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', function(event) {

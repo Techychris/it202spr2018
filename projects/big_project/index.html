@@ -31,7 +31,7 @@
         }
 
         h1 {
-            color: white;
+            color: #0000A0;
             animation: bright 10s infinite alternate ease;
             opacity: .5;
             text-align: center;
@@ -153,29 +153,32 @@
             <br>
             <h2 class="mdc-typography--headline4">Enter your name below.</h2>
             <div class="mdc-text-field">
-                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <input type="text" id="name" class="mdc-text-field__input">
                 <label class="mdc-floating-label" for="my-text-field">Name:</label>
                 <div class="mdc-line-ripple"></div>
             </div>
             <br>
             <h2 class="mdc-typography--headline4">Enter your zipcode below.</h2>
             <div class="mdc-text-field">
-                <input type="text" id="my-text-field" class="mdc-text-field__input">
+                <input type="text" id="zip" class="mdc-text-field__input">
                 <label class="mdc-floating-label" for="my-text-field">Zipcode:</label>
                 <div class="mdc-line-ripple"></div>
             </div>
-            <button class="mdc-button mdc-button--outlined">
+            <button class="mdc-button mdc-button--outlined" id="btnContinue">
                 Continue
             </button>
         </div>
-        <div class="card" id="home">
-            <h1 id="home-header"></h1>
-        </div>
-        <div class="card" id="settings">
+    </div>
+    <div class="card" id="home">
+        <h1 id="home-header">Hello
+            <span class="name"></span>.</h1>
+    </div>
+    <div class="card" id="settings">
 
-        </div>
+    </div>
 </body>
 <script type="text/javascript">
+    //Service worker code: 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
             navigator.serviceWorker.register('/sw.js').then(function (registration) {
@@ -187,23 +190,53 @@
             });
         });
     }
+    //Random Generator for the background
+    //API 1: PEXELS VIDEO
+    //TODO: fallback if pexels is down/onmobile 
     var num = Math.floor((Math.random() * 15));
     var background = $.ajax({
         url: 'https://api.pexels.com/videos/popular?per_page=15&page=1',
         headers: { 'Authorization': 'REPLACE_WITH_PEXELS_API_KEY' }
     })
-    .done(function(res){
-        $("body").prepend("<video autoplay muted loop id='myVideo'> <source src='"+ res.videos[num].video_files[0].link +"' type='video/mp4'></video>");
-        console.log(res);
-    });
+        .done(function (res) {
+            $("body").prepend("<video autoplay muted loop id='myVideo'> <source src='" + res.videos[num].video_files[0].link + "' type='video/mp4'></video>");
+            console.log(res);
+        });
+    //IndexDB 
+    const dbName = "waestheticdb";
+
+    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+    // Open (or create) the database
+    var open = indexedDB.open("Weather202indexdb", 1);
+    var url = "https://api.openweathermap.org/data/2.5/weather?zip=" + zip + ",us"
+    open.onupgradeneeded = function () {
+            var db = open.result;
+            var store = db.createObjectStore("currentStore", { keyPath: "id" });
+            var index = store.createIndex("NameIndex", "name");
+        };
+
 
     $(document).ready(function () {
         $('#loading').remove();
         $('#start').show();
+        // Create the schema
+        
 
 
         $("#btnContinue").on("click", function () {
-            var url = "https://api.openweathermap.org/data/2.5/weather?zip=" + zip + ",us"
+            $("#start").hide();
+            $("#home").show();
+            console.log("click!")
+            open.onsuccess = function () {
+                // Start a new transaction
+                var db = open.result;
+                var tx = db.transaction("currentStore", "readwrite");
+                var store = tx.objectStore("currentStore");
+                var aincrement = store.autoIncrement;
+                var index = store.index("NameIndex");
+                store.put({ id: aincrement, name: $("#name").val(), zip: $("#zip").val() });
+                console.log(db + tx + store + index + aincrement)
+            }
         });
     });
 

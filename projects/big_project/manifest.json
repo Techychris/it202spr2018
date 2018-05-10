@@ -1,12 +1,12 @@
 {
-    "short_name": "202",
-    "name": "202 - IT 202",
+    "short_name": "waesthetic202",
+    "name": "waesthetic",
     "display": "standalone",
     "theme_color": "#b22222",
     "background_color":  "#b22222",
     "icons": [
       {
-        "src": "icon.svg",
+        "src": "icon.png",
         "type": "image/png",
         "sizes": "192x192"
       }

@@ -5,13 +5,15 @@
         crossorigin="anonymous"></script>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
-    <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script type="text/javascript" async src="https://unpkg.com/material-components-web@0.35.1/dist/material-components-web.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
     <style>
-         :root {
+        :root {
             --normPad: 5%;
         }
+
         .card {
             margin: 0;
             position: absolute;
@@ -21,6 +23,7 @@
             padding: var(--normPad);
             background-color: rgba(255, 255, 255, .5);
         }
+
         html,
         body {
             height: 100%;
@@ -106,11 +109,25 @@
                 box-shadow: 0 0 0 transparent;
             }
         }
-        #home{
+
+        #start {
             display: none;
         }
-        #settings{
+
+        #home {
             display: none;
+        }
+
+        #settings {
+            display: none;
+        }
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
         }
     </style>
 </head>
@@ -130,52 +147,64 @@
             <div></div>
         </div>
     </div>
-
-    <div class="card">
-        <h1 class="mdc-typography--headline1">Hello there.</h1>
-        <br>
-        <h2 class="mdc-typography--headline3">Enter your name below.</h2>
-        <div class="mdc-text-field">
+    <div id="start">
+        <div class="card">
+            <h1 class="mdc-typography--headline1">Weather.</h1>
+            <br>
+            <h2 class="mdc-typography--headline4">Enter your name below.</h2>
+            <div class="mdc-text-field">
                 <input type="text" id="my-text-field" class="mdc-text-field__input">
                 <label class="mdc-floating-label" for="my-text-field">Name:</label>
                 <div class="mdc-line-ripple"></div>
-              </div>
-        <br>
-        <h2 class="mdc-typography--headline3">Enter your zipcode below.</h2>
-        <div class="mdc-text-field">
+            </div>
+            <br>
+            <h2 class="mdc-typography--headline4">Enter your zipcode below.</h2>
+            <div class="mdc-text-field">
                 <input type="text" id="my-text-field" class="mdc-text-field__input">
                 <label class="mdc-floating-label" for="my-text-field">Zipcode:</label>
                 <div class="mdc-line-ripple"></div>
-              </div>
-              <button class="mdc-button mdc-button--outlined">
-                    Continue
-                  </button>
-    <div class="card" id = "home">
-        <h1 id = "home-header"></h1>
-    </div>
-    <div class="card" id = "settings">
+            </div>
+            <button class="mdc-button mdc-button--outlined">
+                Continue
+            </button>
+        </div>
+        <div class="card" id="home">
+            <h1 id="home-header"></h1>
+        </div>
+        <div class="card" id="settings">
 
-    </div>
+        </div>
 </body>
 <script type="text/javascript">
     if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
-    $(document).ready(function () {
-        $("#btnContinue").on("click", function() {
-
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function (err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
         });
+    }
+    var num = Math.floor((Math.random() * 15));
+    var background = $.ajax({
+        url: 'https://api.pexels.com/videos/popular?per_page=15&page=1',
+        headers: { 'Authorization': 'REPLACE_WITH_PEXELS_API_KEY' }
+    })
+    .done(function(res){
+        $("body").prepend("<video autoplay muted loop id='myVideo'> <source src='"+ res.videos[num].video_files[0].link +"' type='video/mp4'></video>");
+        console.log(res);
+    });
+
+    $(document).ready(function () {
         $('#loading').remove();
-        $('.start').show();
-        var url = "api.openweathermap.org/data/2.5/weather?zip="+ zip +",us"
+        $('#start').show();
+
+
+        $("#btnContinue").on("click", function () {
+            var url = "api.openweathermap.org/data/2.5/weather?zip=" + zip + ",us"
+        });
     });
 
 </script>

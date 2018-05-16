@@ -21,13 +21,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             padding: var(--normPad);
-            background-color: rgba(255, 255, 255, .5);
+            background-color: rgba(255, 255, 255, 0.808);
         }
 
         html,
         body {
             height: 100%;
-            background: #111;
+            background:lightgrey;
         }
 
         h1 {
@@ -57,9 +57,9 @@
 
         .loader div {
             flex: 1;
-            background: #b22222;
+            background: #0000A0;
             animation: go 3s infinite alternate ease;
-            box-shadow: 0 0 50px #b22222;
+            box-shadow: 0 0 50px #0000A0;
         }
 
         .loader div:nth-child(1) {
@@ -149,29 +149,35 @@
     </div>
     <div id="start">
         <div class="card">
-            <h1 class="mdc-typography--headline1">Weather.</h1>
-            <br>
-            <h2 class="mdc-typography--headline4">Enter your name below.</h2>
-            <div class="mdc-text-field">
-                <input type="text" id="name" class="mdc-text-field__input">
-                <label class="mdc-floating-label" for="my-text-field">Name:</label>
-                <div class="mdc-line-ripple"></div>
-            </div>
-            <br>
-            <h2 class="mdc-typography--headline4">Enter your zipcode below.</h2>
-            <div class="mdc-text-field">
-                <input type="text" id="zip" class="mdc-text-field__input">
-                <label class="mdc-floating-label" for="my-text-field">Zipcode:</label>
-                <div class="mdc-line-ripple"></div>
-            </div>
-            <button class="mdc-button mdc-button--outlined" id="btnContinue">
-                Continue
-            </button>
+            <form>
+                <h1 class="mdc-typography--headline1">Weather.</h1>
+                <br>
+                <h2 class="mdc-typography--headline4">Enter your name below.</h2>
+                <div class="mdc-text-field">
+                    <input type="text" id="name" class="mdc-text-field__input" required>
+                    <label class="mdc-floating-label" for="my-text-field">Name:</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+                <br>
+                <h2 class="mdc-typography--headline4">Enter your zipcode below.</h2>
+                <div class="mdc-text-field">
+                    <input type="text" id="zip" class="mdc-text-field__input" pattern="[0-9]{5}">
+                    <label class="mdc-floating-label" for="my-text-field">Zipcode:</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+                <button class="mdc-button mdc-button--outlined" id="btnContinue" for="my-text-field" type="submit">
+                        Continue
+                    </button>
+                    
+            </form>
+            
+
         </div>
     </div>
     <div class="card" id="home">
+        <button id = "btnSet"></button>
         <h1 id="home-header">Hello
-            <span class="name"></span>.</h1>
+            <span id="greet"></span>.</h1>
     </div>
     <div class="card" id="settings">
 
@@ -179,64 +185,83 @@
 </body>
 <script type="text/javascript">
     //Service worker code: 
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-            navigator.serviceWorker.register('/sw.js').then(function (registration) {
-                // Registration was successful
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function (err) {
-                // registration failed :(
-                console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-    }
+    /*  if ('serviceWorker' in navigator) {
+         window.addEventListener('load', function () {
+             navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                 // Registration was successful
+                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
+             }, function (err) {
+                 // registration failed :(
+                 console.log('ServiceWorker registration failed: ', err);
+             });
+         });
+     } */
     //Random Generator for the background
     //API 1: PEXELS VIDEO
     //TODO: fallback if pexels is down/onmobile 
     var num = Math.floor((Math.random() * 15));
-    var background = $.ajax({
+    const dbName = "waestheticdb";
+    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+    var open = indexedDB.open("Weather202indexdb", 1);
+
+    $.ajax({
         url: 'https://api.pexels.com/videos/popular?per_page=15&page=1',
         headers: { 'Authorization': 'REPLACE_WITH_PEXELS_API_KEY' }
     })
-        .done(function (res) {
-            $("body").prepend("<video autoplay muted loop id='myVideo'> <source src='" + res.videos[num].video_files[0].link + "' type='video/mp4'></video>");
-            console.log(res);
-        });
-    //IndexDB 
-    const dbName = "waestheticdb";
+    .done(function (res) {
+        $("body").prepend("<video autoplay muted loop id='myVideo'> <source src='" + res.videos[num].video_files[0].link + "' type='video/mp4'></video>");
+    });
 
-    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-    // Open (or create) the database
-    var open = indexedDB.open("Weather202indexdb", 1);
-    var url = "https://api.openweathermap.org/data/2.5/weather?zip=" + zip + ",us"
-    open.onupgradeneeded = function () {
-            var db = open.result;
-            var store = db.createObjectStore("currentStore", { keyPath: "id" });
-            var index = store.createIndex("NameIndex", "name");
-        };
+    open.onupgradeneeded = function (e) {
+        var db = event.target.result;
+        var store = db.createObjectStore("currentStore", { keyPath: "id" });
+        var index = store.createIndex("NameIndex", "name");
+    };
 
+    function K2F(K) {
+        return ((K - 273.15) * 1.8) + 32;
+    }
+    function K2C(K) {
+        return K - 273.15;
+    }
 
     $(document).ready(function () {
         $('#loading').remove();
         $('#start').show();
-        // Create the schema
-        
-
-
+        $("#btnGeo").on("click", function getLocation() {
+            var latlng;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (pos) {
+                    latlng = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    var GeoURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng.lat + "," + latlng.lng + "&key=REPLACE_WITH_GOOGLE_API_KEY";
+                    $.get(GeoURL, function (res) {
+                        var zip = res.results[0].address_components[6].long_name;
+                        $("#zip").val(zip);
+                    });
+                })
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        });
         $("#btnContinue").on("click", function () {
+            var url = "https://api.openweathermap.org/data/2.5/weather?zip=" + $("#zip").val() + ",us&appid=REPLACE_WITH_OPENWEATHER_API_KEY"
+            $.get(url, function (res) {
+                console.log(res);
+                $("#home").append("<h2 class='mdc-typography--headline4'>The current temp in "+ res.name +" is "+ Math.floor(K2F(res.main.temp)) +"F <h2>")
+                open.onsuccess = function (e) {
+                    // Start a new transaction
+                    var db = event.target.result;
+                    var tx = db.transaction("currentStore", "readwrite");
+                    var store = tx.objectStore("currentStore");
+                    var aincrement = store.autoIncrement;
+                    var index = store.index("NameIndex");
+                    store.put({ id: aincrement, name: $("#name").val(), zip: $("#zip").val() ,weather: res});
+                }
+            });
+            var name = $("#name").val();
             $("#start").hide();
             $("#home").show();
-            console.log("click!")
-            open.onsuccess = function () {
-                // Start a new transaction
-                var db = open.result;
-                var tx = db.transaction("currentStore", "readwrite");
-                var store = tx.objectStore("currentStore");
-                var aincrement = store.autoIncrement;
-                var index = store.index("NameIndex");
-                store.put({ id: aincrement, name: $("#name").val(), zip: $("#zip").val() });
-                console.log(db + tx + store + index + aincrement)
-            }
+            $("#greet").append(name);
         });
     });
 
